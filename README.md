@@ -1,10 +1,10 @@
-# 🤖 PersonaAI
+# PersonaAI
 
 PersonaAI is an AI-powered chatbot application designed to simulate personalized conversations. It leverages state-of-the-art language models and a simple interface to allow users to interact with custom personas in a chat-based environment.
 
 ---
 
-## 🚀 Features
+## Features
 
 - Custom persona-based conversations
 - Streamlit-powered user interface
@@ -14,7 +14,7 @@ PersonaAI is an AI-powered chatbot application designed to simulate personalized
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 ```
 PersonaAI/
 ├── assets/ # Static assets (images, etc.)

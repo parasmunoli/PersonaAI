@@ -10,24 +10,33 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel(model_name="gemini-2.0-flash")
 chat = model.start_chat(history=[])
 
-
 st.set_page_config(page_title="PersonaAI", page_icon="🤖")
-person = st.selectbox("Choose a person to talk to:", ["Hitesh", "Piyush"])
-st.title(f"💬 Talking to {person}")
-
 hitesh_avatar = os.path.join("assets", "hitesh.jpg")
 piyush_avatar = os.path.join("assets", "piyush.jpg")
 
-if "messages" not in st.session_state:
+if "selected_person" not in st.session_state:
+    st.session_state.selected_person = "Hitesh"
     st.session_state.messages = []
+
+person = st.selectbox("Choose a person to talk to:", ["Hitesh", "Piyush"])
+
+if person != st.session_state.selected_person:
+    st.session_state.selected_person = person
+    st.session_state.messages = []
+
+st.title(f"💬 Talking to {person}")
 
 user_input = st.chat_input("Ask your question...")
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
 
-    with st.spinner("Thinking..."):
-        reply = get_response(user_input, chat, person=person)
+    with st.chat_message("assistant", avatar=hitesh_avatar if person == "Hitesh" else piyush_avatar):
+        thinking_placeholder = st.empty()
+        thinking_placeholder.markdown(f"{person} bhai is thinking...")
 
+    reply = get_response(user_input, chat, person=person)
+
+    thinking_placeholder.empty()
     st.session_state.messages.append({"role": "assistant", "content": reply})
 
 for msg in st.session_state.messages:
